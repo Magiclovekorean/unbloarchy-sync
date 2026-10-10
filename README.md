@@ -28,10 +28,6 @@ These are just names; you can call them anything.
 
 You **fetch** from `upstream` and **push** to `origin`.
 
-> The "X ahead / Y behind" banner on GitHub is a GitHub-side comparison of
-> your fork against its parent repo. It is not a git remote, but it normally
-> lines up with `upstream`. Run `git remote -v` to see what your local remotes
-> actually point to.
 
 ## One-time setup
 
@@ -386,8 +382,3 @@ If `transform.py` needs updating as upstream evolves, regenerate it from the
 new `HEAD`: it protects tokens that appear as `omarchy` more often than
 `unbloarchy` in your branch.
 
-## What "X ahead / Y behind" means in practice
-
-`Y behind` = upstream gained `Y` commits since your last sync. Repeat from
-step 1 to clear it. `X ahead` = your fork's own commits that upstream does not
-have — this is expected and permanent.
