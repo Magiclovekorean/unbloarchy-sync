@@ -38,11 +38,19 @@ _PREFIX_KEEP = [re.compile(p) for p in (
 )]
 
 # always-kept substrings (org / repos / mirrors)
-_SUBSTR_KEEP = ("omarchy.org", "omacom/omarchy", "omarchyplugins")
+_SUBSTR_KEEP = ("omarchy.org", "omarchy.db", "omacom/omarchy", "omarchyplugins")
 
-# literal 'omarchy' / "omarchy" strings and the [omarchy] pacman repo section
-# name (package query, pacman.conf header, escaped-bracket sed/awk references)
-_LITERAL_BARE = re.compile(r"""(["'])omarchy\1|\\?\[omarchy\\?\]""")
+# literal 'omarchy' / "omarchy" strings, the [omarchy] pacman repo section name
+# (package query, pacman.conf header, escaped-bracket sed/awk references), and
+# the bare repo name at the head of a package-repository list (a test's
+# `"omarchy core extra multilib"`), where the name precedes an Arch repository.
+# The bare form is otherwise indistinguishable from a command being rebranded,
+# so it needs the following-repo anchor.
+_LITERAL_BARE = re.compile(
+    r"""(["'])omarchy\1
+      | \\?\[omarchy\\?\]                                   # [omarchy] / \[omarchy\]
+      | (?<![\w-])omarchy(?=\s+(?:asahi-alarm|core|extra|multilib|alarm|aur)\b)
+    """, re.X)
 
 # populated by configure()
 REPO = None
